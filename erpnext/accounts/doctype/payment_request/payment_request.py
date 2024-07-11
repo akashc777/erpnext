@@ -254,8 +254,8 @@ class PaymentRequest(Document):
 		return controller.get_payment_url(
 			**{
 				"amount": flt(self.grand_total, self.precision("grand_total")),
-				"title": data.company.encode("utf-8"),
-				"description": self.subject.encode("utf-8"),
+				"title": data.company if isinstance(data.company, str) else data.company.decode("utf-8"),
+				"description": self.subject if isinstance(self.subject, str) else self.subject.decode("utf-8"),
 				"reference_doctype": "Payment Request",
 				"reference_docname": self.name,
 				"payer_email": self.email_to or frappe.session.user,
