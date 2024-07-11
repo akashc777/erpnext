@@ -266,7 +266,7 @@ class PaymentRequest(Document):
 				"reference_doctype": "Payment Request",
 				"reference_docname": self.name,
 				"payer_email": self.email_to or frappe.session.user,
-				"payer_name": frappe.safe_encode(data.customer_name),
+				"payer_name": frappe.safe_encode(data.customer_name).decode('utf-8') if isinstance(frappe.safe_encode(data.customer_name), bytes) else frappe.safe_encode(data.customer_name),
 				"order_id": self.name,
 				"currency": self.currency,
 			}
